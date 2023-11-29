@@ -2,6 +2,7 @@ import org.junit.jupiter.api.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.*;
 
+import java.time.Duration;
 import java.util.List;
 
 public class Tests {
@@ -10,7 +11,10 @@ public class Tests {
     public void setup()
     {
         driver = new ChromeDriver();
-
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(15));
+        //Duration implicitWait = driver.manage().timeouts().getImplicitWaitTimeout();
+        //Duration pageLoadTimeout = driver.manage().timeouts().getPageLoadTimeout();
     }
     @AfterEach
     public void teardown()
@@ -39,7 +43,7 @@ public class Tests {
     }
 
     @Test
-    public void addingToCart()
+    public void addingToCartShouldUpdateProductCounter()
     {
         driver.get("http://localhost:8080/");
         WebElement productLink = driver.findElement(By.className("woocommerce-LoopProduct-link"));
@@ -47,10 +51,22 @@ public class Tests {
         WebElement addToCartButton = driver.findElement(By.name("add-to-cart"));
         addToCartButton.click();
         Assertions.assertEquals("1", (driver.findElement(By.className("wc-block-mini-cart__badge")).getText()),
-                "Product not added to the cart");
+                "Number of products in the cart wasn't updated from 0 to 1");
     }
+
     @Test
-    public void login()
+    public void addingToCartShouldUpdateTotalInCart()
+    {
+        driver.get("http://localhost:8080/product/history-of-astronomy-by-george-forbes/");
+        driver.findElement(By.name("add-to-cart")).click();
+        driver.findElement(By.className("wc-block-mini-cart__button")).click();
+        WebElement totalPrice = driver.findElement(By.className("wc-block-components-totals-item__value"));
+        Assertions.assertEquals("20,00 €", totalPrice.getText(),"Total was not updated correctly");
+
+    }
+
+    @Test
+    public void successfulAdminLoginDisplaysAccountContent()
     {
         driver.get("http://localhost:8080/my-account/");
         driver.findElement(By.id("username")).sendKeys("admin");
