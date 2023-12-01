@@ -1,18 +1,23 @@
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.List;
 
-public class Tests {
+public class Course {
     WebDriver driver;
+    WebDriverWait wait;
     @BeforeEach
     public void setup()
     {
         driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+        // implicitWait shouldn't be used when webDriverWait is used
+        // driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(15));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         //Duration implicitWait = driver.manage().timeouts().getImplicitWaitTimeout();
         //Duration pageLoadTimeout = driver.manage().timeouts().getPageLoadTimeout();
     }
@@ -50,7 +55,8 @@ public class Tests {
         productLink.click();
         WebElement addToCartButton = driver.findElement(By.name("add-to-cart"));
         addToCartButton.click();
-        Assertions.assertEquals("1", (driver.findElement(By.className("wc-block-mini-cart__badge")).getText()),
+        WebElement totalPrice = wait.until(ExpectedConditions.presenceOfElementLocated(By.className("wc-block-mini-cart__badge")));
+        Assertions.assertEquals("1", (totalPrice.getText()),
                 "Number of products in the cart wasn't updated from 0 to 1");
     }
 
@@ -75,8 +81,23 @@ public class Tests {
 
         Assertions.assertDoesNotThrow(() -> driver.findElement(By.className("woocommerce-MyAccount-content")),
                 "Login failed");
+    }
 
-
+    @Test
+    public void updatingQuantityShouldChangeTotalPrice()
+    {
+        driver.get("http://localhost:8080/product/history-of-astronomy-by-george-forbes/");
+        driver.findElement(By.name("add-to-cart")).click();
+        driver.get("http://localhost:8080/cart/");
+        String totalBefore = driver.findElement(By.className("order-total")).getText();
+        WebElement quantityField = driver.findElement(By.className("qty"));
+        quantityField.clear();
+        quantityField.sendKeys("2");
+        driver.findElement(By.name("update_cart")).click();
+        wait.until(ExpectedConditions.numberOfElementsToBe(By.className("blockUI"), 0));
+        WebElement totalAfter = driver.findElement(By.className("order-total"));
+        Assertions.assertNotEquals(totalBefore ,totalAfter.getText(),
+                "Total wasn't changed after cart update");
     }
 
 }
