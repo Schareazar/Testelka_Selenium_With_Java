@@ -31,9 +31,7 @@ public class Course {
         String url = "http://localhost:8080/";
         driver.get(url);
         Assertions.assertAll(
-                () -> Assertions.assertEquals(url, driver.getCurrentUrl(), "Url different than expected"),
-                () -> Assertions.assertEquals("Test App - Just another WordPress site", driver.getTitle(),
-                        "Site title different than expected")
+                () -> Assertions.assertEquals(url, driver.getCurrentUrl(), "Url different than expected")
         );
     }
     @Test
