@@ -1,8 +1,7 @@
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.*;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.*;
 
 import java.time.Duration;
 import java.util.List;
@@ -55,7 +54,9 @@ public class Course {
         productLink.click();
         WebElement addToCartButton = driver.findElement(By.name("add-to-cart"));
         addToCartButton.click();
-        WebElement totalPrice = wait.until(ExpectedConditions.presenceOfElementLocated(By.className("wc-block-mini-cart__badge")));
+    //  (By.className("wc-block-mini-cart__badge")));
+        WebElement totalPrice = wait.until(driver -> driver.findElement(By.className("wc-block-mini-cart__badge")));
+
         Assertions.assertEquals("1", (totalPrice.getText()),
                 "Number of products in the cart wasn't updated from 0 to 1");
     }
@@ -94,7 +95,8 @@ public class Course {
         quantityField.clear();
         quantityField.sendKeys("2");
         driver.findElement(By.name("update_cart")).click();
-        wait.until(ExpectedConditions.numberOfElementsToBe(By.className("blockUI"), 0));
+        //wait.until(ExpectedConditions.numberOfElementsToBe(By.className("blockUI"), 0));
+        wait.until(driver -> driver.findElements(By.className("blockUI")).size() == 0);
         WebElement totalAfter = driver.findElement(By.className("order-total"));
         Assertions.assertNotEquals(totalBefore ,totalAfter.getText(),
                 "Total wasn't changed after cart update");
