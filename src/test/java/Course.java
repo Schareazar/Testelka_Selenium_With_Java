@@ -100,4 +100,34 @@ public class Course {
                 "Total wasn't changed after cart update");
     }
 
+    @Test
+    public void updatingCardShouldBeDisabledIfQuantityIsUnchanged()
+    {
+        driver.get("http://localhost:8080/product/history-of-astronomy-by-george-forbes/");
+        driver.findElement(By.name("add-to-cart")).click();
+        driver.get("http://localhost:8080/cart/");
+
+        WebElement updateButton = driver.findElement(By.name("update_cart"));
+        Assertions.assertFalse(updateButton.isEnabled(),
+                "Cart update button was enabled even though quantity wasn't changed");
+    }
+
+    @Test
+    public void virtualProductShouldNotBeShippable()
+    {
+        driver.get("http://localhost:8080/my-account/");
+        driver.findElement(By.id("username")).sendKeys("admin");
+        driver.findElement(By.id("password")).sendKeys("admin");
+        driver.findElement(By.name("login")).click();
+
+        driver.get("http://localhost:8080/wp-admin/post-new.php?post_type=product");
+        driver.findElement(By.id("_virtual")).click();
+        WebElement shipping = driver.findElement(By.className("shipping_options"));
+
+        Assertions.assertFalse(shipping.isDisplayed());
+
+
+
+    }
+
 }
