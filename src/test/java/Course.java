@@ -135,7 +135,7 @@ public class Course {
         driver.get("http://localhost:8080/wp-admin/edit.php?post_type=product");
         driver.findElement(By.id("cb-select-all-1")).click();
         List<WebElement> productCheckboxes = driver.findElements(By.name("post[]"));
-        //Testelka solution
+        // Testelka solution
 //        Assertions.assertEquals(productCheckboxes.size(), productCheckboxes.stream().filter
 //         (checkbox -> checkbox.isSelected()).count(), "Not all checkboxes are ticked");
         // My solution
@@ -143,7 +143,24 @@ public class Course {
              ) {
             Assertions.assertTrue(checkbox.isSelected());
         }
+    }
 
+    @Test
+    public void searchBoxShouldHavePlaceholder()
+    {
+        driver.get("http://localhost:8080/");
+        WebElement searchBox = driver.findElement(By.id("wc-block-search__input-1"));
+        Assertions.assertEquals("Search products…", searchBox.getDomAttribute("placeholder"),
+                "SearchBox placeholder text is incorrect");
+    }
+
+    @Test
+    public void defaultProductQuantityShouldBe1()
+    {
+        driver.get("http://localhost:8080/product/history-of-astronomy-by-george-forbes/");
+        WebElement defaultQuantity = driver.findElement(By.className("qty"));
+        Assertions.assertEquals("1",  defaultQuantity.getDomProperty("defaultValue"),
+                "Default value is different than 1");
     }
 
 }
