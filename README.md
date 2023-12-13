@@ -3,4 +3,4 @@ Project is a result of following Selenium in Java course from https://testelka.p
 
   BaseTests class contains tests created when following lessons
   
-  Excercises class contains solutions to challanges from each chapter
+  Exercises class contains solutions to challanges from each chapter
