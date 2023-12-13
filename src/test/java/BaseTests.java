@@ -5,8 +5,9 @@ import org.openqa.selenium.support.ui.*;
 import java.time.Duration;
 
 public class BaseTests {
-    WebDriver driver;
-    WebDriverWait wait;
+    protected WebDriver driver;
+    protected WebDriverWait wait;
+    protected final String baseUrl = "http://localhost:8080";
     @BeforeEach
     public void setup()
     {
@@ -15,8 +16,10 @@ public class BaseTests {
         // driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(15));
         wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-        //Duration implicitWait = driver.manage().timeouts().getImplicitWaitTimeout();
-        //Duration pageLoadTimeout = driver.manage().timeouts().getPageLoadTimeout();
+        /*
+         Duration implicitWait = driver.manage().timeouts().getImplicitWaitTimeout();
+         Duration pageLoadTimeout = driver.manage().timeouts().getPageLoadTimeout();
+        */
     }
     @AfterEach
     public void teardown()
