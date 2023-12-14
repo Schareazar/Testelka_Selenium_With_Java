@@ -1,10 +1,14 @@
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+
 import java.util.List;
 
 public class AdminPanelTests extends BaseTests{
 
     private final String newProducts = "post-new.php?post_type=product";
+
+    private final String editProducts = "edit.php?post_type=product";
     @BeforeEach
     public void adminLogin()
     {
@@ -24,15 +28,16 @@ public class AdminPanelTests extends BaseTests{
     public void virtualProductShouldNotBeShippable()
     {
         driver.get(baseUrl + "/wp-admin/" + newProducts);
-        driver.findElement(By.id("_virtual")).click();
+        wait.until(ExpectedConditions.elementToBeClickable(By.id("_virtual"))).click();
         WebElement shipping = driver.findElement(By.className("shipping_options"));
         Assertions.assertFalse(shipping.isDisplayed());
     }
     @Test
     public void selectAllShouldTickAllBoxes()
     {
-        driver.get(baseUrl + "/wp-admin/" + newProducts);
-        driver.findElement(By.id("cb-select-all-1")).click();
+        driver.get(baseUrl + "/wp-admin/" + editProducts);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("activity-panel-tab-setup")));
+        wait.until(ExpectedConditions.elementToBeClickable(By.id("cb-select-all-1"))).click();
         List<WebElement> productCheckboxes = driver.findElements(By.name("post[]"));
         // Testelka solution
 //        Assertions.assertEquals(productCheckboxes.size(), productCheckboxes.stream().filter
