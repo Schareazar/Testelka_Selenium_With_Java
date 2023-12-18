@@ -1,3 +1,5 @@
+package Course;
+
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.*;
 import java.util.List;
