@@ -1,11 +1,14 @@
 package Course;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
+import java.util.List;
 
 public class BaseTests {
     protected WebDriver driver;
@@ -38,5 +41,16 @@ public class BaseTests {
     {
         driver.quit();
     }
-
+    public WebElement Find(By selector)
+    {
+        return driver.findElement(selector);
+    }
+    public List<WebElement> FindMany(By selector)
+    {
+        return driver.findElements(selector);
+    }
+    public void SwitchFrame(By selector)
+    {
+        driver.switchTo().frame(Find(selector));
+    }
 }
