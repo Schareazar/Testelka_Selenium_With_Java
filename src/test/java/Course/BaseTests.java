@@ -6,6 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.List;
@@ -26,7 +27,7 @@ public class BaseTests {
         driver = new EdgeDriver(ieOptions);
 */
         ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.addArguments("--headless=new");
+        //chromeOptions.addArguments("--headless=new");
         driver = new ChromeDriver(chromeOptions);
 
         // implicitWait shouldn't be used when webDriverWait is used
@@ -51,6 +52,6 @@ public class BaseTests {
     }
     public void SwitchFrame(By selector)
     {
-        driver.switchTo().frame(Find(selector));
+        wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(selector));
     }
 }

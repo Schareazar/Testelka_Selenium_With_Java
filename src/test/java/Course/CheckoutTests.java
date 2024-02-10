@@ -28,13 +28,14 @@ public class CheckoutTests extends BaseTests {
             SwitchFrame(By.cssSelector("#stripe-card-element iframe"));
             Find(By.cssSelector("[name=cardnumber]")).sendKeys("4242424242424242");
             driver.switchTo().defaultContent();
-            SwitchFrame(By.cssSelector("stripe-exp-element iframe"));
-            Find(By.cssSelector("[name=exp-date]")).sendKeys("2929");
+            SwitchFrame(By.cssSelector("#stripe-exp-element iframe"));
+            Find(By.cssSelector("[name=exp-date]")).sendKeys("444");
             driver.switchTo().defaultContent();
-            SwitchFrame(By.cssSelector("stripe-cvc-element iframe"));
+            SwitchFrame(By.cssSelector("#stripe-cvc-element iframe"));
             Find(By.cssSelector("[name=cvc]")).sendKeys("555");
             driver.switchTo().defaultContent();
 
+            wait.until(ExpectedConditions.numberOfElementsToBe(By.className("blockUI"),0));
             Find(By.cssSelector("#place_order")).click();
             wait.until(ExpectedConditions.numberOfElementsToBe(By.className("blockUI"),0));
 
