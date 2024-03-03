@@ -47,6 +47,18 @@ public class Rally extends Base{
         Assertions.assertEquals("Select your availability and click Continue",
                 wait.until(ExpectedConditions.presenceOfElementLocated(By.className("px-1"))).getText(),
                 "Poll is not visible");
+    }
 
+    @Test
+    public void exercise5a()
+    {
+        driver.get(baseUrlRally + "/admin/" + createPoll());
+        driver.get(driver.findElement(By.xpath(".//div[@class='relative']/input")).getDomAttribute("Value"));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(".//textarea[@id='comment']"))).sendKeys("Test comment");
+        driver.findElement(By.xpath(".//input[@name='authorName']")).sendKeys("Test author");
+        driver.findElement(By.xpath(".//form//button[@type='submit']")).click();
+        wait.until(ExpectedConditions.numberOfElementsToBe(By.cssSelector("button.pointer-events-none"), 0));
+        Assertions.assertTrue(driver.findElement(By.xpath(".//div[@data-testid='comment']")).isDisplayed()
+                ,"Comment is not displayed");
     }
 }

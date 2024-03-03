@@ -20,7 +20,6 @@ public class BaseTests {
     @BeforeEach
     public void setup()
     {
-
 //        FirefoxOptions ffOptions = new FirefoxOptions();
 //       // ffOptions.addArguments("-headless");
 //        driver = new FirefoxDriver(ffOptions);
