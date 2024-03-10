@@ -6,6 +6,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import java.util.List;
+
 public class Rally extends Base{
 
     @Test
@@ -60,5 +62,35 @@ public class Rally extends Base{
         wait.until(ExpectedConditions.numberOfElementsToBe(By.cssSelector("button.pointer-events-none"), 0));
         Assertions.assertTrue(driver.findElement(By.xpath(".//div[@data-testid='comment']")).isDisplayed()
                 ,"Comment is not displayed");
+    }
+
+    @Test
+    public void exercise5b()
+            //celowo beznadziejne lokatory na stronie
+    {
+        String startingHour = "1:00 PM";
+        String endingHour = "1:30 PM";
+
+        exercise1();
+        driver.findElement(By.xpath(".//span[contains(text(),'10')]")).click();
+        driver.findElement(By.xpath(".//span[contains(text(),'11')]")).click();
+        driver.findElement(By.xpath(".//span[contains(text(),'15')]")).click();
+        driver.findElement(By.xpath(".//button[@data-testid='specify-times-switch']")).click();
+        driver.findElement(By.xpath(".//span[contains(text(), '12:00 PM')]")).click();
+        driver.findElement(By.xpath(".//span[contains(text(), '" + startingHour + "')]")).click();
+        driver.findElements(By.cssSelector("[id*=headlessui-menu-button] button:not([role])")).get(0).click();
+        driver.findElement(By.xpath(".//button[@role='menuitem'][1]")).click();
+
+        List <WebElement> meetingHours =
+                driver.findElements(By.xpath(".//div[@class='divide-y']//button[contains (@id, 'headlessui-listbox')]"));
+        Assertions.assertAll(
+                () ->    Assertions.assertEquals(startingHour, meetingHours.get(0).getText(), "Starting hour incorrect"),
+                () ->    Assertions.assertEquals(startingHour, meetingHours.get(2).getText(), "Starting hour incorrect"),
+                () ->    Assertions.assertEquals(startingHour, meetingHours.get(4).getText(), "Starting hour incorrect"),
+                () ->    Assertions.assertEquals(endingHour, meetingHours.get(1).getText(), "Ending hour incorrect"),
+                () ->    Assertions.assertEquals(endingHour, meetingHours.get(3).getText(), "Ending hour incorrect"),
+                () ->    Assertions.assertEquals(endingHour, meetingHours.get(5).getText(), "Ending hour incorrect")
+        );
+
     }
 }
