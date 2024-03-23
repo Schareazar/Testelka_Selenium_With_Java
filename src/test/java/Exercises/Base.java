@@ -12,19 +12,22 @@ import java.net.http.HttpResponse;
 import java.time.Duration;
 import org.json.*;
 
+import javax.swing.*;
+
 public class Base {
     protected WebDriver driver;
     protected WebDriverWait wait;
-    protected String baseUrlMattermost = "http://localhost:8065";
-    protected String baseUrlRally = "http://localhost:3000";
+    protected ActionBot bot;
+    protected String baseUrl;
 
     @BeforeEach
     public void setup()
-
     {
+
         ChromeOptions chromeOptions = new ChromeOptions();
        // chromeOptions.addArguments("--headless=new");
         driver = new ChromeDriver(chromeOptions);
+        bot = new ActionBot(driver, baseUrl);
         wait = new WebDriverWait(driver, Duration.ofSeconds(5));
     }
     @AfterEach
@@ -62,7 +65,7 @@ public class Base {
             HttpRequest request = HttpRequest
                     .newBuilder()
                     .POST(HttpRequest.BodyPublishers.ofString(body))
-                    .uri(URI.create(baseUrlRally + "/api/trpc/polls.create?batch=1"))
+                    .uri(URI.create("http://localhost:3000" + "/api/trpc/polls.create?batch=1"))
                     .header("accept", "application/json")
                     .build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -90,7 +93,7 @@ public class Base {
             HttpRequest request = HttpRequest
                     .newBuilder()
                     .POST(HttpRequest.BodyPublishers.ofString(body))
-                    .uri(URI.create(baseUrlRally + "/api/trpc/polls.delete?batch=1"))
+                    .uri(URI.create("http://localhost:3000" + "/api/trpc/polls.delete?batch=1"))
                     .header("accept", "application/json")
                     .build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());

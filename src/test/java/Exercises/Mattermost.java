@@ -9,19 +9,19 @@ public class Mattermost extends Base{
 
     private void adminLogin()
     {
-        driver.get(baseUrlMattermost + "/login/");
+        bot.mattermostGo("/login/");
         wait.until(driver -> driver.findElement(By.className("get-app__continue"))).click();
         wait.until(driver -> driver.findElement(By.name("loginId"))).sendKeys("test");
-        driver.findElement(By.name("password-input")).sendKeys("marcin");
-        driver.findElement(By.id("saveSetting")).click();
+        bot.write("#input_password-input", "marcin");
+        bot.click("#saveSetting");
     }
     @Test
     public void exercise2a()
     {
-        driver.get(baseUrlMattermost + "/");
+        bot.mattermostGo("/");
         wait.until(driver -> driver.findElement(By.className("get-app__continue"))).click();
         wait.until(ExpectedConditions.presenceOfElementLocated(By.className("alternate-link__link"))).click();
-        Assertions.assertEquals((baseUrlMattermost + "/access_problem"), driver.getCurrentUrl(),
+        Assertions.assertEquals((bot.baseUrlMattermost + "/access_problem"), driver.getCurrentUrl(),
                 "Access problem page was not displayed");
     }
     @Test
@@ -36,7 +36,7 @@ public class Mattermost extends Base{
     public void exercise3a()
     {
         adminLogin();
-        driver.get(baseUrlMattermost + "/admin_console/user_management/permissions/system_scheme");
+        bot.mattermostGo("/admin_console/user_management/permissions/system_scheme");
         WebElement saveButton = wait.until(ExpectedConditions.presenceOfElementLocated((By.id("saveSetting"))));
         Assertions.assertFalse(saveButton.isEnabled(), "Save button is not disabled by default");
     }
@@ -46,8 +46,8 @@ public class Mattermost extends Base{
         adminLogin();
         //it is impossible to create WebElement to refer to because of StaleElementReference
         //after clicking on the element it changes to a new one with the same name
-        driver.findElement((By.id("toggleFavorite"))).click();
-        Assertions.assertTrue(driver.findElement((By.id("toggleFavorite"))).getDomAttribute("class").contains("active"));
-        driver.findElement((By.id("toggleFavorite"))).click();
+        bot.click("#toggleFavorite");
+        Assertions.assertTrue(bot.find("#toggleFavorite").getDomAttribute("class").contains("active"));
+        bot.click("#toggleFavorite");
     }
 }
