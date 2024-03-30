@@ -12,14 +12,10 @@ import java.net.http.HttpResponse;
 import java.time.Duration;
 import org.json.*;
 
-import javax.swing.*;
-
 public class Base {
     protected WebDriver driver;
     protected WebDriverWait wait;
     protected ActionBot bot;
-    protected String baseUrl;
-
     @BeforeEach
     public void setup()
     {
@@ -27,7 +23,7 @@ public class Base {
         ChromeOptions chromeOptions = new ChromeOptions();
        // chromeOptions.addArguments("--headless=new");
         driver = new ChromeDriver(chromeOptions);
-        bot = new ActionBot(driver, baseUrl);
+        bot = new ActionBot(driver);
         wait = new WebDriverWait(driver, Duration.ofSeconds(5));
     }
     @AfterEach
