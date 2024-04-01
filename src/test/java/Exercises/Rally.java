@@ -11,9 +11,20 @@ import java.util.List;
 public class Rally extends Base{
 
     @Test
+    @Disabled
+    public void exercise1() {
+        bot.rallyGo("/new");
+        driver.findElement(By.id("title")).sendKeys("Test event title $%^*");
+        driver.findElement(By.id("location")).sendKeys("Test event location żółć");
+        driver.findElement(By.id("description")).sendKeys("Test event description /</test>");
+        driver.findElement(By.className("btn-primary")).click();
+        Assertions.assertEquals("Step 2 of 3", driver.findElement(By.className("tracking-tight")).getText(),
+                "Step 2 not loaded");
+    }
+    @Test
     public void exercise3b()
     {
-        driver.get(baseUrlRally + "/new");
+        bot.rallyGo("/new");
         WebElement title = driver.findElement(By.id("title"));
         WebElement location = driver.findElement(By.id("location"));
         WebElement description = driver.findElement(By.id("description"));
@@ -25,18 +36,6 @@ public class Rally extends Base{
                                 description.getDomAttribute("placeholder"))
                 );
     }
-    @Test
-    @Disabled
-    public void exercise1() {
-        driver.get(baseUrlRally + "/new");
-        driver.findElement(By.id("title")).sendKeys("Test event title $%^*");
-        driver.findElement(By.id("location")).sendKeys("Test event location żółć");
-        driver.findElement(By.id("description")).sendKeys("Test event description /</test>");
-        driver.findElement(By.className("btn-primary")).click();
-        Assertions.assertEquals("Step 2 of 3", driver.findElement(By.className("tracking-tight")).getText(),
-                "Step 2 not loaded");
-    }
-
     @Test
     public void exercise4b()
     {
@@ -54,7 +53,7 @@ public class Rally extends Base{
     @Test
     public void exercise5a()
     {
-        driver.get(baseUrlRally + "/admin/" + createPoll());
+        bot.rallyGo("/admin/" + createPoll());
         driver.get(driver.findElement(By.xpath(".//div[@class='relative']/input")).getDomAttribute("Value"));
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(".//textarea[@id='comment']"))).sendKeys("Test comment");
         driver.findElement(By.xpath(".//input[@name='authorName']")).sendKeys("Test author");
