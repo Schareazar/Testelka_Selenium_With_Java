@@ -9,7 +9,7 @@ import java.time.Duration;
 public class ProductPage {
     private final WebDriver driver;
     private final String baseUrl = "http://localhost:8080";
-    private WebDriverWait wait;
+    private final WebDriverWait wait;
 
     public ProductPage(WebDriver driver)
     {
@@ -27,6 +27,10 @@ public class ProductPage {
     }
     public void waitToAppear(String cssLocator) {
     wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(cssLocator)));
+    }
+    public void waitToDisappear (String cssLocator)
+    {
+        wait.until(ExpectedConditions.numberOfElementsToBe(By.cssSelector(cssLocator), 0));
     }
     public String getText(String cssLocator) {
         return driver.findElement(By.cssSelector(cssLocator)).getText();

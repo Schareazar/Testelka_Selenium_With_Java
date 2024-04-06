@@ -31,7 +31,6 @@ public class BaseTests {
         ChromeOptions chromeOptions = new ChromeOptions();
         //chromeOptions.addArguments("--headless=new");
         driver = new ChromeDriver(chromeOptions);
-
         // implicitWait shouldn't be used when webDriverWait is used
         // driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
         // driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(15));
