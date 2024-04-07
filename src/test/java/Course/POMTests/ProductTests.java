@@ -1,5 +1,7 @@
-package Course;
+package Course.POMTests;
 
+import Course.POMPages.CartPage;
+import Course.POMPages.ProductPage;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
@@ -8,7 +10,7 @@ import org.openqa.selenium.WebElement;
 public class ProductTests extends BaseTests{
     private final String addToCartLocator = "button[name='add-to-cart']";
     private final String updateCartLocator = "button[name='update_cart']";
-    protected String astronomySlug = "history-of-astronomy-by-george-forbes/";
+    private final String astronomySlug = "history-of-astronomy-by-george-forbes/";
 
     @Test
     public void updatingCartShouldBeDisabledIfQuantityIsUnchanged()

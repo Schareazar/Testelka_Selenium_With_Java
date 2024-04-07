@@ -1,20 +1,14 @@
-package Course;
+package Course.POMPages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
-
-public class ProductPage {
-    private final WebDriver driver;
+public class ProductPage extends BasePage{
     private final String baseUrl = "http://localhost:8080";
-    private final WebDriverWait wait;
 
     public ProductPage(WebDriver driver)
     {
-        this.driver = driver;
-        wait = new WebDriverWait (driver, Duration.ofSeconds(5));
+        super(driver);
     }
 
     public void open(String productSlug)

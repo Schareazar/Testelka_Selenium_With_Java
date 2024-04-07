@@ -1,5 +1,6 @@
-package Course;
+package Course.OtherTests;
 
+import Course.POMTests.BaseTests;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
@@ -9,7 +10,7 @@ import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
-public class ShadowDOMTests extends BaseTests{
+public class ShadowDOMTests extends BaseTests {
 
     @Test
     public void shadowDOMChromium()

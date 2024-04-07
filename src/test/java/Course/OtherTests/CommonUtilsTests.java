@@ -1,5 +1,6 @@
-package Course;
+package Course.OtherTests;
 
+import Course.POMTests.BaseTests;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.*;
 import java.util.List;

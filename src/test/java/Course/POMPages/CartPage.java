@@ -1,21 +1,14 @@
-package Course;
-
+package Course.POMPages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
-
-public class CartPage {
-    private final WebDriver driver;
+public class CartPage extends BasePage{
     private final String baseUrl = "http://localhost:8080";
     private final By cartItems = By.cssSelector("tr.cart_item");
-    public WebDriverWait wait;
     public CartPage(WebDriver driver) {
-        this.driver = driver;
-        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        super(driver);
     }
     public void open()
     {

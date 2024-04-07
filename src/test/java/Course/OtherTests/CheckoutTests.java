@@ -1,5 +1,6 @@
-package Course;
+package Course.OtherTests;
 
+import Course.POMTests.BaseTests;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;

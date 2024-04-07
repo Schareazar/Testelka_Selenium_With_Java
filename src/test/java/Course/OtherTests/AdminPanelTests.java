@@ -1,12 +1,13 @@
-package Course;
+package Course.OtherTests;
 
+import Course.POMTests.BaseTests;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
 
-public class AdminPanelTests extends BaseTests{
+public class AdminPanelTests extends BaseTests {
 
     private final String newProducts = "post-new.php?post_type=product";
 
