@@ -4,18 +4,18 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class ProductPage extends BasePage{
-    private final String baseUrl = "http://localhost:8080";
 
+    private final By addToWishlist = By.cssSelector("a.add_to_wishlist");
+    private final String blockingLoader = ".blockUI";
+    private final By wishlistFromHeader = By.cssSelector("#menu-item-88 a");
     public ProductPage(WebDriver driver)
     {
         super(driver);
     }
-
     public void open(String productSlug)
     {
         driver.get(baseUrl + "/product/" + productSlug);
     }
-
     public void click(String cssLocator) {
         driver.findElement(By.cssSelector(cssLocator)).click();
     }
@@ -33,5 +33,16 @@ public class ProductPage extends BasePage{
     {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".woocommerce-message>.button"))).click();
         return new CartPage(driver);
+    }
+
+    public ProductPage addToWishlist() {
+        driver.findElement(addToWishlist).click();
+        waitToDisappear(blockingLoader);
+        return this;
+    }
+    public WishlistPage goToWishlist()
+    {
+        driver.findElement(wishlistFromHeader).click();
+        return new WishlistPage(driver);
     }
 }

@@ -9,7 +9,7 @@ public class CommonUtilsTests extends BaseTests {
     @Test
     public void urlTest()
     {
-        driver.get(baseUrl + "/");
+        driver.get("http://localhost:8080/");
         Assertions.assertAll(
                 () -> Assertions.assertEquals("http://localhost:8080/", driver.getCurrentUrl(), "Url different than expected")
         );
@@ -17,7 +17,7 @@ public class CommonUtilsTests extends BaseTests {
     @Test
     public void firstFindBy()
     {
-        driver.get(baseUrl + "/");
+        driver.get("http://localhost:8080/");
         WebElement searchField = driver.findElement(By.id("wc-block-search__input-1"));
         searchField.click();
         List<WebElement> addToCart = driver.findElements(By.className("add_to_cart_button"));
@@ -26,7 +26,7 @@ public class CommonUtilsTests extends BaseTests {
     @Test
     public void searchBoxShouldHavePlaceholder()
     {
-        driver.get(baseUrl + "/");
+        driver.get("http://localhost:8080/");
         WebElement searchBox = driver.findElement(By.id("wc-block-search__input-1"));
         Assertions.assertEquals("Search products…", searchBox.getDomAttribute("placeholder"),
                 "SearchBox placeholder text is incorrect");

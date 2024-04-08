@@ -16,7 +16,6 @@ import java.util.List;
 public class BaseTests {
     protected WebDriver driver;
     protected WebDriverWait wait;
-    protected final String baseUrl = "http://localhost:8080";
     @BeforeEach
     public void setup()
     {

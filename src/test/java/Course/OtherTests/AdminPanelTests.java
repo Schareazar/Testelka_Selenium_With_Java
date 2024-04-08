@@ -15,7 +15,7 @@ public class AdminPanelTests extends BaseTests {
     @BeforeEach
     public void adminLogin()
     {
-        driver.get(baseUrl + "/my-account/");
+        driver.get("http://localhost:8080/my-account/");
         driver.findElement(By.id("username")).sendKeys("admin");
         driver.findElement(By.id("password")).sendKeys("admin");
         driver.findElement(By.name("login")).click();
@@ -30,7 +30,7 @@ public class AdminPanelTests extends BaseTests {
     @Test
     public void virtualProductShouldNotBeShippable()
     {
-        driver.get(baseUrl + "/wp-admin/" + newProducts);
+        driver.get("http://localhost:8080/wp-admin/" + newProducts);
         wait.until(ExpectedConditions.elementToBeClickable(By.id("_virtual"))).click();
         WebElement shipping = driver.findElement(By.className("shipping_options"));
         Assertions.assertFalse(shipping.isDisplayed());
@@ -38,7 +38,7 @@ public class AdminPanelTests extends BaseTests {
     @Test
     public void selectAllShouldTickAllBoxes()
     {
-        driver.get(baseUrl + "/wp-admin/" + editProducts);
+        driver.get("http://localhost:8080/wp-admin/" + editProducts);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.id("activity-panel-tab-setup")));
         wait.until(ExpectedConditions.elementToBeClickable(By.id("cb-select-all-1"))).click();
         List<WebElement> productCheckboxes = driver.findElements(By.name("post[]"));

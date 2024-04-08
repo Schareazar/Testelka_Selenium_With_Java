@@ -5,7 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class CartPage extends BasePage{
-    private final String baseUrl = "http://localhost:8080";
+
     private final By cartItems = By.cssSelector("tr.cart_item");
     public CartPage(WebDriver driver) {
         super(driver);

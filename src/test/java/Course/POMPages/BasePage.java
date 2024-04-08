@@ -8,6 +8,7 @@ public abstract class BasePage {
 
     protected final WebDriver driver;
     protected final WebDriverWait wait;
+    protected final String baseUrl = "http://localhost:8080";
     protected BasePage (WebDriver driver)
    {
        this.driver = driver;

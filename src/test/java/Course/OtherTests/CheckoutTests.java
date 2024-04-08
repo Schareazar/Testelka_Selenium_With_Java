@@ -14,9 +14,9 @@ public class CheckoutTests extends BaseTests {
     @Test
     public void CanProvideCardDataInIframe()
     {
-            driver.get(baseUrl + "/product/" + astronomySlug);
+            driver.get("http://localhost:8080/product/" + astronomySlug);
             Find(addToCartLocator).click();
-            driver.get(baseUrl + "/checkout/");
+            driver.get("http://localhost:8080/checkout/");
 
             Find(By.cssSelector("#billing_first_name")).sendKeys("Jan");
             Find(By.cssSelector("#billing_last_name")).sendKeys("Testowy");
