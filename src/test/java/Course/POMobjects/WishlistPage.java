@@ -1,4 +1,4 @@
-package Course.POMPages;
+package Course.POMobjects;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

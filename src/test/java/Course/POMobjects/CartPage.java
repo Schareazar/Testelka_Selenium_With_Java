@@ -1,14 +1,15 @@
-package Course.POMPages;
+package Course.POMobjects;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class CartPage extends BasePage{
 
     private final By cartItems = By.cssSelector("tr.cart_item");
+    public final StoreHeaderComponent storeHeader;
     public CartPage(WebDriver driver) {
         super(driver);
+        storeHeader = new StoreHeaderComponent(driver);
     }
     public void open()
     {
@@ -20,10 +21,6 @@ public class CartPage extends BasePage{
     public int getNumberOfProductsInCart()
     {
         return driver.findElements(cartItems).size();
-    }
-    public void waitToDisappear (String cssLocator)
-    {
-        wait.until(ExpectedConditions.numberOfElementsToBe(By.cssSelector(cssLocator), 0));
     }
     public void write(String cssLocator, String input) {
        WebElement inputField = driver.findElement(By.cssSelector(cssLocator));

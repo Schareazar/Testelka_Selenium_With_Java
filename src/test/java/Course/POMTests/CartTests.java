@@ -1,6 +1,5 @@
 package Course.POMTests;
-
-import Course.POMPages.CartPage;
+import Course.POMobjects.CartPage;
 import org.junit.jupiter.api.*;
 
 public class CartTests extends BaseTests {

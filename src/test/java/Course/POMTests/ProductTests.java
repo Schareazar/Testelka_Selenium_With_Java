@@ -1,7 +1,7 @@
 package Course.POMTests;
 
-import Course.POMPages.CartPage;
-import Course.POMPages.ProductPage;
+import Course.POMobjects.CartPage;
+import Course.POMobjects.ProductPage;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;

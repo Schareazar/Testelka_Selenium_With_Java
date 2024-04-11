@@ -1,17 +1,13 @@
-package Course.POMPages;
+package Course.POMobjects;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public class MainPage extends BasePage {
+public class StoreHeaderComponent extends BasePage{
     private final By wishlistFromHeader = By.cssSelector("#menu-item-88 a");
-    public MainPage(WebDriver driver) {
+    protected StoreHeaderComponent(WebDriver driver) {
         super(driver);
     }
-
-    public void open() {
-        driver.get(baseUrl);
-    }
-
     public WishlistPage goToWishlist()
     {
         driver.findElement(wishlistFromHeader).click();
