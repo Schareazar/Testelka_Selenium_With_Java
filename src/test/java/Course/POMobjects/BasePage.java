@@ -1,4 +1,5 @@
 package Course.POMobjects;
+import Helpers.ConfigurationReader;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -10,10 +11,11 @@ public abstract class BasePage {
 
     protected final WebDriver driver;
     protected final WebDriverWait wait;
-    protected final String baseUrl = "http://localhost:8080";
+    protected final String baseUrl;
     protected BasePage (WebDriver driver)
    {
        this.driver = driver;
+       baseUrl = new ConfigurationReader().getBaseUrl();
        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
    }
     public void waitToDisappear (String cssLocator)
