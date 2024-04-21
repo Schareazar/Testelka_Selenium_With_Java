@@ -1,17 +1,13 @@
 package Course.POMTests;
+import Helpers.BrowserFactory;
 import Helpers.ConfigurationReader;
+import Helpers.NoSuchBrowserException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.edge.EdgeOptions;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
@@ -27,34 +23,15 @@ public class BaseTests {
     configuration = new ConfigurationReader();
     }
     @BeforeEach
-    public void setup()
-    {
-String browser = configuration.getBrowser();
-boolean isHeadless = configuration.isHeadless();
-
-        switch (browser) {
-            case "Chrome" -> {
-                if (isHeadless) {
-                    driver = new ChromeDriver(new ChromeOptions().addArguments("--headless=new"));
-                } else {
-                    driver = new ChromeDriver();
-                }
-            }
-            case "Firefox" -> {
-                if (isHeadless) {
-                    driver = new FirefoxDriver(new FirefoxOptions().addArguments("-headless"));
-                } else {
-                    driver = new FirefoxDriver();
-                }
-            }
-            case "Edge" -> {
-                if (isHeadless) {
-                    driver = new EdgeDriver(new EdgeOptions().addArguments("--headless=new"));
-                } else {
-                    driver = new EdgeDriver();
-                }
-            }
+    public void setup() {
+        BrowserFactory browser = new BrowserFactory();
+        try {
+            driver = browser.createDriver(configuration);
+        } catch (NoSuchBrowserException e) {
+            throw new RuntimeException(e);
         }
+
+
     }
     @AfterEach
     public void teardown()
