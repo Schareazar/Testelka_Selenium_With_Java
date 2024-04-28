@@ -1,15 +1,15 @@
 package Course.POMobjects;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import Course.Helpers.Browser;
 
 public class CartPage extends BasePage{
 
     private final By cartItems = By.cssSelector("tr.cart_item");
     public final StoreHeaderComponent storeHeader;
-    public CartPage(WebDriver driver) {
-        super(driver);
-        storeHeader = new StoreHeaderComponent(driver);
+    public CartPage(Browser browser) {
+        super(browser);
+        storeHeader = new StoreHeaderComponent(browser);
     }
     public void open()
     {

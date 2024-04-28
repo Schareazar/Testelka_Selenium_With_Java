@@ -11,7 +11,7 @@ public class WishlistTests extends BaseTests{
 
     @Test
     public void wishlist_should_be_empty_by_default() {
-        MainPage mainPage = new MainPage(driver);
+        MainPage mainPage = new MainPage(browser);
         mainPage.open();
         WishlistPage wishlistPage = mainPage.storeHeader.goToWishlist();
         Assertions.assertEquals(0, wishlistPage.getNumberOfProducts(),
@@ -19,7 +19,7 @@ public class WishlistTests extends BaseTests{
     }
     @Test
     public void wishlist_counter_should_update() {
-        ProductPage productPage = new ProductPage(driver);
+        ProductPage productPage = new ProductPage(browser);
         productPage.open(astronomySlug);
         WishlistPage wishlistPage = productPage.addToWishlist().storeHeader.goToWishlist();
         Assertions.assertNotEquals(0, wishlistPage.getNumberOfProducts(),

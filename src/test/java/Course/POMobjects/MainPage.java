@@ -1,12 +1,12 @@
 package Course.POMobjects;
-import org.openqa.selenium.WebDriver;
+import Course.Helpers.Browser;
 
 public class MainPage extends BasePage {
 
     public final StoreHeaderComponent storeHeader;
-    public MainPage(WebDriver driver) {
-        super(driver);
-        storeHeader = new StoreHeaderComponent(driver);
+    public MainPage(Browser browser) {
+        super(browser);
+        storeHeader = new StoreHeaderComponent(browser);
     }
 
     public void open() {

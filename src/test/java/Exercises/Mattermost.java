@@ -46,7 +46,7 @@ public class Mattermost extends Base{
         adminLogin();
         //it is impossible to create WebElement to refer to because of StaleElementReference
         //after clicking on the element it changes to a new one with the same name
-        driver.findElement((By.id("toggleFavorite"))).click();
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("toggleFavorite"))).click();
         Assertions.assertTrue(driver.findElement((By.id("toggleFavorite"))).getDomAttribute("class").contains("active"));
         driver.findElement((By.id("toggleFavorite"))).click();
     }

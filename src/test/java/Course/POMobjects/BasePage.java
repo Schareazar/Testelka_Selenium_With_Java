@@ -1,21 +1,23 @@
 package Course.POMobjects;
-import Course.Helpers.ConfigurationReader;
+import Course.Helpers.Browser;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.time.Duration;
 
 public abstract class BasePage {
 
     protected final WebDriver driver;
     protected final WebDriverWait wait;
+    protected final Browser browser;
     protected final String baseUrl;
-    protected BasePage (WebDriver driver)
+
+    protected BasePage (Browser browser)
    {
-       this.driver = driver;
-       baseUrl = new ConfigurationReader().getBaseUrl();
+       this.driver = browser.driver();
+       this.browser = browser;
+       baseUrl = browser.baseUrl();
        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
    }
     public void waitToDisappear (String cssLocator)

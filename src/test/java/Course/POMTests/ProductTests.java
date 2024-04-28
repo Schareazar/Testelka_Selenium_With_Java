@@ -15,7 +15,7 @@ public class ProductTests extends BaseTests{
     @Test
     public void updatingCartShouldBeDisabledIfQuantityIsUnchanged()
     {
-        ProductPage productPage = new ProductPage(driver);
+        ProductPage productPage = new ProductPage(browser);
         productPage.open(astronomySlug);
         productPage.click(addToCartLocator);
         productPage.goToCart();
@@ -25,7 +25,7 @@ public class ProductTests extends BaseTests{
     @Test
     public void updatingQuantityShouldChangeTotalPrice()
     {
-        ProductPage productPage = new ProductPage(driver);
+        ProductPage productPage = new ProductPage(browser);
         productPage.open(astronomySlug);
         productPage.click(addToCartLocator);
         CartPage cartPage = productPage.goToCart();
@@ -44,7 +44,7 @@ public class ProductTests extends BaseTests{
     @Test
     public void addingToCartShouldUpdateProductCounter()
     {
-        ProductPage productPage = new ProductPage(driver);
+        ProductPage productPage = new ProductPage(browser);
         productPage.open(astronomySlug);
         productPage.click(addToCartLocator);
         productPage.waitToAppear(".wc-block-mini-cart__badge");
@@ -54,7 +54,7 @@ public class ProductTests extends BaseTests{
     @Test
     public void addingToCartShouldUpdateTotalInCart()
     {
-        ProductPage productPage = new ProductPage(driver);
+        ProductPage productPage = new ProductPage(browser);
         productPage.open(astronomySlug);
         productPage.click(addToCartLocator);
         productPage.click(".wc-block-mini-cart__button");
@@ -66,7 +66,7 @@ public class ProductTests extends BaseTests{
     @Test
     public void defaultProductQuantityShouldBe1()
     {
-        ProductPage productPage = new ProductPage(driver);
+        ProductPage productPage = new ProductPage(browser);
         productPage.open(astronomySlug);
         Assertions.assertEquals("1",  Find(By.className("qty")).getDomProperty("defaultValue"),
                 "Default value is different than 1");

@@ -10,7 +10,12 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 
 public class BrowserFactory {
 
-    public WebDriver createDriver(ConfigurationReader configuration) throws NoSuchBrowserException {
+    public Browser createInstance(ConfigurationReader configuration) throws NoSuchBrowserException
+    {
+       WebDriver driver = createDriver(configuration);
+       return new Browser(driver,configuration.getBaseUrl());
+    }
+    private WebDriver createDriver(ConfigurationReader configuration) throws NoSuchBrowserException {
         String browser = configuration.getBrowser();
 
         switch (browser) {
