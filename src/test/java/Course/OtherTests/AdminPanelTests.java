@@ -4,7 +4,9 @@ import Course.POMTests.BaseTests;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.List;
 
 public class AdminPanelTests extends BaseTests {
@@ -15,6 +17,7 @@ public class AdminPanelTests extends BaseTests {
     @BeforeEach
     public void adminLogin()
     {
+        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         driver.get("http://localhost:8080/my-account/");
         driver.findElement(By.id("username")).sendKeys("admin");
         driver.findElement(By.id("password")).sendKeys("admin");

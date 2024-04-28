@@ -1,4 +1,4 @@
-package Helpers;
+package Course.Helpers;
 
 public class NoSuchBrowserException  extends Exception{
 

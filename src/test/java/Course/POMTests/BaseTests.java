@@ -1,7 +1,7 @@
 package Course.POMTests;
-import Helpers.BrowserFactory;
-import Helpers.ConfigurationReader;
-import Helpers.NoSuchBrowserException;
+import Course.Helpers.BrowserFactory;
+import Course.Helpers.ConfigurationReader;
+import Course.Helpers.NoSuchBrowserException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,4 +1,4 @@
-package Helpers;
+package Course.Helpers;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;

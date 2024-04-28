@@ -1,5 +1,5 @@
 package Course.POMobjects;
-import Helpers.ConfigurationReader;
+import Course.Helpers.ConfigurationReader;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
