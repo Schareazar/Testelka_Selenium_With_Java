@@ -4,7 +4,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import java.time.Duration;
 
 public abstract class BasePage {
 
@@ -15,10 +14,10 @@ public abstract class BasePage {
 
     protected BasePage (Browser browser)
    {
-       this.driver = browser.driver();
+       this.driver = browser.driver;
        this.browser = browser;
-       baseUrl = browser.baseUrl();
-       wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+       baseUrl = browser.baseUrl;
+       wait = browser.wait;
    }
     public void waitToDisappear (String cssLocator)
     {
@@ -30,6 +29,4 @@ public abstract class BasePage {
     public String getText(String cssLocator) {
         return driver.findElement(By.cssSelector(cssLocator)).getText();
     }
-
-
 }

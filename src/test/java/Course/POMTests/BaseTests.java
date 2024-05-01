@@ -34,19 +34,19 @@ public class BaseTests {
     @AfterEach
     public void teardown()
     {
-        browser.driver().quit();
+        browser.driver.quit();
     }
     public WebElement Find(By selector)
     {
-        return browser.driver().findElement(selector);
+        return browser.driver.findElement(selector);
     }
     public List<WebElement> FindMany(By selector)
     {
-        return browser.driver().findElements(selector);
+        return browser.driver.findElements(selector);
     }
     public void SwitchFrame(By selector)
     {
-        wait = new WebDriverWait(browser.driver(), Duration.ofSeconds(10));
+        wait = new WebDriverWait(browser.driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(selector));
     }
 }

@@ -1,5 +1,4 @@
 package Course.Helpers;
-
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -10,6 +9,7 @@ public class ConfigurationReader {
     private final String browser;
     private final String baseUrl;
     private final String headless;
+    private final String waitSeconds;
 
    public ConfigurationReader()
     {
@@ -31,6 +31,7 @@ public class ConfigurationReader {
         baseUrl = properties.getProperty("baseUrl");
         browser = properties.getProperty("browser");
         headless = properties.getProperty("headless");
+        waitSeconds = properties.getProperty("waitSeconds");
     }
     public String getBrowser()
     {
@@ -46,5 +47,10 @@ public class ConfigurationReader {
     {
         if (!baseUrl.isEmpty()) return baseUrl;
         else throw new RuntimeException("BaseUrl is not specified in configuration.properties");
+    }
+    public int getWaitSeconds()
+    {
+        if (!waitSeconds.isEmpty()) return Integer.parseInt(waitSeconds);
+        else throw new RuntimeException("Wait lenght in seconds is not specified in configuration.properties");
     }
 }

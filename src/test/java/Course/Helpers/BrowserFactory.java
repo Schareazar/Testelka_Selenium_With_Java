@@ -13,7 +13,7 @@ public class BrowserFactory {
     public Browser createInstance(ConfigurationReader configuration) throws NoSuchBrowserException
     {
        WebDriver driver = createDriver(configuration);
-       return new Browser(driver,configuration.getBaseUrl());
+       return new Browser(driver,configuration);
     }
     private WebDriver createDriver(ConfigurationReader configuration) throws NoSuchBrowserException {
         String browser = configuration.getBrowser();

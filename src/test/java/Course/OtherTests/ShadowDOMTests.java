@@ -10,7 +10,7 @@ public class ShadowDOMTests extends BaseTests {
     @Test
     public void shadowDOMChromium()
     {
-        WebDriver driver = browser.driver();
+        WebDriver driver = browser.driver;
         String input = "Test";
         driver.get("https://fakestore.testelka.pl/shadow-dom-w-selenium/");
         WebElement shadowHost = driver.findElement(By.cssSelector("#host"));
@@ -25,7 +25,7 @@ public class ShadowDOMTests extends BaseTests {
     @Test
     public void shadowDOMFirefox()
     {
-        WebDriver driver = browser.driver();
+        WebDriver driver = browser.driver;
         String input = "Test";
         driver.get("https://fakestore.testelka.pl/shadow-dom-w-selenium/");
         WebElement shadowHost = driver.findElement(By.cssSelector("#host"));

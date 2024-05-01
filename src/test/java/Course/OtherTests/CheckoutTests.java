@@ -15,7 +15,7 @@ public class CheckoutTests extends BaseTests {
     @Test
     public void CanProvideCardDataInIframe()
     {
-            WebDriver driver = browser.driver();
+            WebDriver driver = browser.driver;
             driver.get("http://localhost:8080/product/" + astronomySlug);
             Find(addToCartLocator).click();
             driver.get("http://localhost:8080/checkout/");
