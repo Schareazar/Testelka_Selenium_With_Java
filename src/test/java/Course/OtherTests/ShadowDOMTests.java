@@ -1,19 +1,16 @@
-package Course;
-
+package Course.OtherTests;
+import Course.POMTests.BaseTests;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.SearchContext;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 
 import java.util.List;
 
-public class ShadowDOMTests extends BaseTests{
-
+public class ShadowDOMTests extends BaseTests {
     @Test
     public void shadowDOMChromium()
     {
+        WebDriver driver = browser.driver;
         String input = "Test";
         driver.get("https://fakestore.testelka.pl/shadow-dom-w-selenium/");
         WebElement shadowHost = driver.findElement(By.cssSelector("#host"));
@@ -28,6 +25,7 @@ public class ShadowDOMTests extends BaseTests{
     @Test
     public void shadowDOMFirefox()
     {
+        WebDriver driver = browser.driver;
         String input = "Test";
         driver.get("https://fakestore.testelka.pl/shadow-dom-w-selenium/");
         WebElement shadowHost = driver.findElement(By.cssSelector("#host"));

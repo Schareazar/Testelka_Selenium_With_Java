@@ -1,8 +1,10 @@
-package Course;
+package Course.OtherTests;
 
+import Course.POMTests.BaseTests;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class CheckoutTests extends BaseTests {
@@ -13,9 +15,10 @@ public class CheckoutTests extends BaseTests {
     @Test
     public void CanProvideCardDataInIframe()
     {
-            driver.get(baseUrl + "/product/" + astronomySlug);
+            WebDriver driver = browser.driver;
+            driver.get("http://localhost:8080/product/" + astronomySlug);
             Find(addToCartLocator).click();
-            driver.get(baseUrl + "/checkout/");
+            driver.get("http://localhost:8080/checkout/");
 
             Find(By.cssSelector("#billing_first_name")).sendKeys("Jan");
             Find(By.cssSelector("#billing_last_name")).sendKeys("Testowy");
