@@ -99,6 +99,7 @@ public class BrowserFactory {
     }
     private RemoteWebDriver createRemoteDriver(ConfigurationReader configuration, MutableCapabilities options)
     {
+        options.setCapability("browserVersion", configuration.getBrowserVersion());
         try {
             return new RemoteWebDriver(new URL(configuration.getRemoteUrl()), options);
         } catch (MalformedURLException e) {
