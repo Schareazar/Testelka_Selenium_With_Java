@@ -13,7 +13,7 @@ public class ShadowDOMTests extends BaseTests {
         WebDriver driver = browser.driver;
         String input = "Test";
         driver.get("https://fakestore.testelka.pl/shadow-dom-w-selenium/");
-        WebElement shadowHost = driver.findElement(By.cssSelector("#host"));
+        WebElement shadowHost = Find(By.cssSelector("#host"));
         SearchContext shadowRoot = shadowHost.getShadowRoot();
         shadowRoot.findElement(By.cssSelector("#input")).sendKeys(input);
         shadowRoot.findElement(By.cssSelector("button")).click();

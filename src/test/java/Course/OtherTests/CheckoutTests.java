@@ -4,13 +4,19 @@ import Course.POMTests.BaseTests;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Wait;
+import java.time.Duration;
 
 public class CheckoutTests extends BaseTests {
 
     private final By addToCartLocator = By.name("add-to-cart");
     private final String astronomySlug = "history-of-astronomy-by-george-forbes/";
+    private final By addToWishlistLocator = By.cssSelector("a.add_to_wishlist");
+    private final By removeFromWishlistLocator = By.cssSelector(".delete_item");
 
     @Test
     public void CanProvideCardDataInIframe()
@@ -44,5 +50,21 @@ public class CheckoutTests extends BaseTests {
 
             Assertions.assertEquals("Order received", Find(By.cssSelector(".entry-title")).getText(),
                     "Order not successfully received");
+    }
+    @Test
+    public void fluentWait()
+    {
+        WebDriver driver = browser.driver;
+        driver.get("http://localhost:8080/product/" + astronomySlug);
+        Find(addToWishlistLocator).click();
+
+        Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
+                .withTimeout(Duration.ofSeconds(7))
+                .pollingEvery(Duration.ofNanos(200))
+                .ignoring(NoSuchElementException.class);
+
+        wait.until(ExpectedConditions.presenceOfElementLocated(removeFromWishlistLocator));
+        driver.findElement(removeFromWishlistLocator).click();
+        Assertions.assertTrue(wait.until(ExpectedConditions.presenceOfElementLocated(addToWishlistLocator)).isDisplayed());
     }
 }
