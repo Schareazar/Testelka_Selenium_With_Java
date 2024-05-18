@@ -7,6 +7,7 @@ public class CartPage extends BasePage{
 
     private final By cartItems = By.cssSelector("tr.cart_item");
     public final StoreHeaderComponent storeHeader;
+
     public CartPage(Browser browser) {
         super(browser);
         storeHeader = new StoreHeaderComponent(browser);

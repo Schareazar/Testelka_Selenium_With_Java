@@ -5,10 +5,10 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-
 import java.util.List;
 
 public class Rally extends Base{
+    private final APICalls apiCalls = new APICalls();
 
     @Test
     @Disabled
@@ -49,11 +49,12 @@ public class Rally extends Base{
                 wait.until(ExpectedConditions.presenceOfElementLocated(By.className("px-1"))).getText(),
                 "Poll is not visible");
     }
-
     @Test
     public void exercise5a()
     {
-        bot.rallyGo("/admin/" + createPoll());
+        String pollURI = apiCalls.createPoll();
+
+        bot.rallyGo("/admin/" + pollURI);
         driver.get(driver.findElement(By.xpath(".//div[@class='relative']/input")).getDomAttribute("Value"));
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(".//textarea[@id='comment']"))).sendKeys("Test comment");
         driver.findElement(By.xpath(".//input[@name='authorName']")).sendKeys("Test author");
@@ -61,11 +62,11 @@ public class Rally extends Base{
         wait.until(ExpectedConditions.numberOfElementsToBe(By.cssSelector("button.pointer-events-none"), 0));
         Assertions.assertTrue(driver.findElement(By.xpath(".//div[@data-testid='comment']")).isDisplayed()
                 ,"Comment is not displayed");
+        apiCalls.deletePoll(pollURI);
     }
-
     @Test
     public void exercise5b()
-            //celowo beznadziejne lokatory na stronie
+            //locators are bad on webpage for purpose of this exercise
     {
         String startingHour = "1:00 PM";
         String endingHour = "1:30 PM";

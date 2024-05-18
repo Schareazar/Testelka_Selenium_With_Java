@@ -14,6 +14,7 @@ import java.net.URL;
 public class BrowserFactory {
 
     private final String targetErrorMessage = "Target provided in configuration.properties is not correct";
+
     public Browser createInstance(ConfigurationReader configuration) throws NoSuchBrowserException
     {
        WebDriver driver = createDriver(configuration);
@@ -35,7 +36,6 @@ public class BrowserFactory {
             default -> throw new NoSuchBrowserException(browser);
         }
     }
-
     private WebDriver createChromeInstance (ConfigurationReader configuration)
     {
         ChromeOptions options = new ChromeOptions();

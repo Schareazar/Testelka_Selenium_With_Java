@@ -7,6 +7,7 @@ public class StoreHeaderComponent extends BasePage{
     protected StoreHeaderComponent(Browser browser) {
         super(browser);
     }
+
     public WishlistPage goToWishlist()
     {
         driver.findElement(wishlistFromHeader).click();

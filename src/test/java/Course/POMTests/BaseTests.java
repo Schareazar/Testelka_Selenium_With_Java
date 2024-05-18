@@ -17,6 +17,7 @@ public class BaseTests {
     protected Browser browser;
     protected WebDriverWait wait;
     private static ConfigurationReader configuration;
+
     @BeforeAll
     public static void loadConfiguration()
     {
@@ -36,6 +37,7 @@ public class BaseTests {
     {
         browser.driver.quit();
     }
+
     public WebElement Find(By selector)
     {
         return browser.driver.findElement(selector);

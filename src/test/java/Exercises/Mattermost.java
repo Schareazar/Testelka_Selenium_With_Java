@@ -5,14 +5,6 @@ import org.openqa.selenium.WebElement;
 
 public class Mattermost extends Base{
 
-    private void adminLogin()
-    {
-        bot.mattermostGo("/login/");
-        bot.waitToAppear(".get-app__continue").click();
-        bot.waitToAppear("#input_loginId").sendKeys("test");
-        bot.write("#input_password-input", "marcin");
-        bot.click("#saveSetting");
-    }
     @Test
     public void exercise2a()
     {

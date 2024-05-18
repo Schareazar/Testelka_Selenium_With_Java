@@ -40,7 +40,6 @@ public class ProductTests extends BaseTests{
         Assertions.assertNotEquals(totalBefore ,totalAfter.getText(),
                 "Total wasn't changed after cart update");
     }
-
     @Test
     public void addingToCartShouldUpdateProductCounter()
     {
