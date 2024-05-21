@@ -11,6 +11,8 @@ public class AdminPanelTests extends BaseTests {
 
     private final String newProducts = "post-new.php?post_type=product";
     private final String editProducts = "edit.php?post_type=product";
+    private final String adminLink = "http://localhost:8080/wp-admin/";
+    private final String uploadMedia = "upload.php";
 
     @BeforeEach
     public void adminLogin()
@@ -32,7 +34,7 @@ public class AdminPanelTests extends BaseTests {
     @Test
     public void virtualProductShouldNotBeShippable()
     {
-        browser.driver.get("http://localhost:8080/wp-admin/" + newProducts);
+        browser.driver.get(adminLink + newProducts);
         wait.until(ExpectedConditions.elementToBeClickable(By.id("_virtual"))).click();
         WebElement shipping = browser.driver.findElement(By.className("shipping_options"));
         Assertions.assertFalse(shipping.isDisplayed());
@@ -40,7 +42,7 @@ public class AdminPanelTests extends BaseTests {
     @Test
     public void selectAllShouldTickAllBoxes()
     {
-        browser.driver.get("http://localhost:8080/wp-admin/" + editProducts);
+        browser.driver.get(adminLink + editProducts);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.id("activity-panel-tab-setup")));
         wait.until(ExpectedConditions.elementToBeClickable(By.id("cb-select-all-1"))).click();
         List<WebElement> productCheckboxes = browser.driver.findElements(By.name("post[]"));
@@ -52,5 +54,20 @@ public class AdminPanelTests extends BaseTests {
         ) {
             Assertions.assertTrue(checkbox.isSelected());
         }
+    }
+
+    @Test
+    public void newMediaCanBeAdded()
+    {
+        WebDriver driver = browser.driver;
+        driver.get(adminLink + uploadMedia);
+        Find(By.cssSelector("a.page-title-action")).click();
+        Find(By.cssSelector("input[type=file]")).sendKeys("C:\\Users\\kukaw\\Desktop\\capture.jpg");
+        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[aria-label=\"capture\"]"))).click();
+
+        Assertions.assertEquals("File size: 212 B", Find(By.cssSelector(".file-size")).getText());
+
+        Find(By.className("delete-attachment")).click();
+        driver.switchTo().alert().accept();
     }
 }
