@@ -4,6 +4,7 @@ import Course.POMTests.BaseTests;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Cookie;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -66,5 +67,24 @@ public class CheckoutTests extends BaseTests {
         wait.until(ExpectedConditions.presenceOfElementLocated(removeFromWishlistLocator));
         driver.findElement(removeFromWishlistLocator).click();
         Assertions.assertTrue(wait.until(ExpectedConditions.presenceOfElementLocated(addToWishlistLocator)).isDisplayed());
+    }
+    @Test
+    public void itemsInCartCookieValueUpdatesCorrectly()
+    {
+        WebDriver driver = browser.driver;
+        driver.get("http://localhost:8080/product/" + astronomySlug);
+        Find(addToCartLocator).click();
+        Find(addToCartLocator).click();
+
+        Cookie itemsInCartCookie = driver.manage().getCookieNamed("woocommerce_items_in_cart");
+        int cookieNumber = driver.manage().getCookies().size();
+        Cookie newCookie = new Cookie("test", "5");
+        driver.manage().addCookie(newCookie);
+
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(cookieNumber + 1, driver.manage().getCookies().size()),
+                () -> Assertions.assertEquals("2", itemsInCartCookie.getValue())
+                );
+        driver.manage().deleteAllCookies();
     }
 }
