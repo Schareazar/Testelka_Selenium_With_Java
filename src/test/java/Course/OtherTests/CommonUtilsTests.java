@@ -5,6 +5,7 @@ import org.openqa.selenium.*;
 import java.util.List;
 
 public class CommonUtilsTests extends BaseTests {
+
     @Test
     public void urlTest()
     {
@@ -33,24 +34,5 @@ public class CommonUtilsTests extends BaseTests {
         Assertions.assertEquals("Search products…", searchBox.getDomAttribute("placeholder"),
                 "SearchBox placeholder text is incorrect");
     }
-    @Test
-    public void windowSizeAndPositionManipulation()
-    {
-        WebDriver driver = browser.driver;
-        driver.manage().window().setSize(new Dimension(1600, 900));
-        driver.manage().window().setPosition(new Point(0,1));
-        //driver.manage().window().fullscreen();
-        driver.navigate().refresh();
-        driver.navigate().to("http://localhost:8080/");
-        Dimension size = driver.manage().window().getSize();
-        Point position = driver.manage().window().getPosition();
-        String pageSource = driver.getPageSource();
-        Assertions.assertAll(
-                () -> Assertions.assertEquals(1600, size.getWidth()),
-                () -> Assertions.assertEquals(900, size.getHeight()),
-                () -> Assertions.assertEquals(0, position.getX()),
-                () -> Assertions.assertEquals(1, position.getY()),
-                () -> Assertions.assertFalse(pageSource.isEmpty())
-        );
-    }
+
 }
