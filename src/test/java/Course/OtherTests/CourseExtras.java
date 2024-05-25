@@ -5,11 +5,23 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.*;
+import org.openqa.selenium.print.PageMargin;
+import org.openqa.selenium.print.PageSize;
+import org.openqa.selenium.print.PrintOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.Wait;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.sql.Timestamp;
 import java.time.Duration;
+import java.util.Base64;
 
 public class CourseExtras extends BaseTests {
     private final String astronomySlug = "history-of-astronomy-by-george-forbes/";
@@ -85,5 +97,48 @@ public class CourseExtras extends BaseTests {
         FlavorsDropDown.selectByVisibleText("marakuja");
         FlavorsDropDown.selectByValue("strawberry");
         Assertions.assertEquals("truskawkowy", FlavorsDropDown.getFirstSelectedOption().getText());
+    }
+    @Test
+    public void printPageExample() {
+        driver.get("http://localhost:3000/");
+        PrintsPage printer = (PrintsPage) driver;
+        PrintOptions printOptions = new PrintOptions();
+        PageSize pageSize = new PageSize(27.94, 21.59);
+        printOptions.setPageSize(pageSize);
+        PageMargin pageMargin = new PageMargin(0, 0, 0, 0);
+        printOptions.setPageMargin(pageMargin);
+        printOptions.setBackground(true);
+        printOptions.setScale(0.50);
+
+        Pdf pdf = printer.print(printOptions);
+        String pageContent = pdf.getContent();
+
+        Path outputPath = Paths.get("./target/media/pageContent.pdf");
+
+        byte[] decodedPageContent = Base64.getDecoder().decode(pageContent);
+        try {
+            Files.createDirectories(outputPath.getParent());
+            Files.write(outputPath, decodedPageContent);
+        } catch (IOException e) {
+            throw new RuntimeException("An error occurred while writing the PDF file: " + e);
+        }
+        Assertions.assertNotEquals(0, decodedPageContent.length);
+    }
+    @Test
+    public void screenshotExample()
+    {
+        driver.get("http://localhost:3000/");
+        WebElement element = Find(By.cssSelector(".items-end.mx-auto"));
+        File pageScreenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+        File elementScreenshot = element.getScreenshotAs(OutputType.FILE);
+        Path pageOutputPath = Paths.get("./target/media/pageScreenshot.jpg");
+        Path elementOutputPath = Paths.get("./target/media/element.jpg");
+        try {
+            Files.copy(pageScreenshot.toPath(), pageOutputPath, StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(elementScreenshot.toPath(), elementOutputPath, StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            throw new RuntimeException("Screenshot save failed" + e);
+        }
+        Assertions.assertTrue(pageScreenshot.exists() && elementScreenshot.exists());
     }
 }
