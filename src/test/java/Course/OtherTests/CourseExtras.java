@@ -5,6 +5,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.*;
+import org.openqa.selenium.devtools.DevTools;
+import org.openqa.selenium.devtools.HasDevTools;
+import org.openqa.selenium.devtools.v85.log.Log;
 import org.openqa.selenium.print.PageMargin;
 import org.openqa.selenium.print.PageSize;
 import org.openqa.selenium.print.PrintOptions;
@@ -12,14 +15,12 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.Wait;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.sql.Timestamp;
 import java.time.Duration;
 import java.util.Base64;
 
@@ -140,5 +141,46 @@ public class CourseExtras extends BaseTests {
             throw new RuntimeException("Screenshot save failed" + e);
         }
         Assertions.assertTrue(pageScreenshot.exists() && elementScreenshot.exists());
+    }
+    @Test
+    public void javascriptExample()
+    {
+        driver.get("http://localhost:3000/");
+        JavascriptExecutor js = (JavascriptExecutor)driver;
+
+        WebElement twitterLink = Find(By.cssSelector("a[href='https://twitter.com/ralllyco']"));
+        WebElement rallyStartButton = Find(By.cssSelector("a.bg-primary-500"));
+
+        js.executeScript("arguments[0].scrollIntoView()", twitterLink);
+        String rallyStartButtonText = (String) js.executeScript("return arguments[0].innerText", rallyStartButton);
+
+        Assertions.assertAll(
+                () -> Assertions.assertTrue(twitterLink.isDisplayed()),
+                () -> Assertions.assertEquals("Get started", rallyStartButtonText)
+        );
+    }
+    @Test
+    //Chromium only
+    public void consoleLogsExample()
+            {
+                DevTools devTools = ((HasDevTools)driver).getDevTools();
+                devTools.createSession();
+                devTools.send(Log.enable());
+                devTools.getDomains().events().addConsoleListener(
+                        log -> System.out.println(
+                                log.getTimestamp() + " " + log.getType() + "\n" + log.getMessages()
+                        )
+                );
+                driver.get("https://fakestore.testelka.pl/console-log-events");
+            }
+    @Test
+    //Chromium only
+    public void jsExceptionsExample()
+    {
+        DevTools devTools = ((HasDevTools)driver).getDevTools();
+        devTools.createSession();
+        devTools.getDomains().events().addJavascriptExceptionListener(System.out::println);
+        driver.get("https://fakestore.testelka.pl/javascript-exceptions");
+        Find(By.id("button-1")).click();
     }
 }
