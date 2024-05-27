@@ -7,10 +7,13 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.*;
 import org.openqa.selenium.devtools.DevTools;
 import org.openqa.selenium.devtools.HasDevTools;
+import org.openqa.selenium.devtools.NetworkInterceptor;
 import org.openqa.selenium.devtools.v85.log.Log;
 import org.openqa.selenium.print.PageMargin;
 import org.openqa.selenium.print.PageSize;
 import org.openqa.selenium.print.PrintOptions;
+import org.openqa.selenium.remote.http.HttpResponse;
+import org.openqa.selenium.remote.http.Route;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
@@ -23,6 +26,8 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.Duration;
 import java.util.Base64;
+
+import static org.openqa.selenium.remote.http.Contents.utf8String;
 
 public class CourseExtras extends BaseTests {
     private final String astronomySlug = "history-of-astronomy-by-george-forbes/";
@@ -182,5 +187,22 @@ public class CourseExtras extends BaseTests {
         devTools.getDomains().events().addJavascriptExceptionListener(System.out::println);
         driver.get("https://fakestore.testelka.pl/javascript-exceptions");
         Find(By.id("button-1")).click();
+    }
+    @Test
+    public void interceptAndChangeResponseExample()
+    {
+        NetworkInterceptor networkInterceptor = new NetworkInterceptor(driver,
+                Route.matching(req -> req.getUri().contains("store"))
+                        .to(() -> req -> new HttpResponse().setStatus(200)
+                        .setHeader("Content-type", "text/css")
+                        .setContent(utf8String("Test"))));
+        driver.get("https://fakestore.testelka.pl");
+        networkInterceptor.close();
+    }
+    @Test
+    public void basicAuthExample()
+    {
+        ((HasAuthentication)driver).register(UsernameAndPassword.of("harrypotter", "Alohomora"));
+        driver.get("https://fakestore.testelka.pl/wp-content/uploads/protected/cos.html");
     }
 }
