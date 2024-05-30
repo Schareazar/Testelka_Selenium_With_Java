@@ -9,6 +9,7 @@ import org.openqa.selenium.devtools.DevTools;
 import org.openqa.selenium.devtools.HasDevTools;
 import org.openqa.selenium.devtools.NetworkInterceptor;
 import org.openqa.selenium.devtools.v85.log.Log;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.print.PageMargin;
 import org.openqa.selenium.print.PageSize;
 import org.openqa.selenium.print.PrintOptions;
@@ -24,6 +25,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.Duration;
 import java.util.Base64;
+import java.util.List;
 
 import static org.openqa.selenium.remote.http.Contents.utf8String;
 
@@ -67,7 +69,7 @@ public class CourseExtras extends BaseTests {
         driver.get("http://localhost:8080/product/" + astronomySlug);
         Find(addToWishlistLocator).click();
 
-        Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
+        Wait<WebDriver> wait = new FluentWait<>(driver)
                 .withTimeout(Duration.ofSeconds(7))
                 .pollingEvery(Duration.ofNanos(200))
                 .ignoring(NoSuchElementException.class);
@@ -234,5 +236,40 @@ public class CourseExtras extends BaseTests {
                 () -> Assertions.assertNotEquals(firstTab, secondTab),
                 () -> Assertions.assertEquals(2, driver.getWindowHandles().size())
         );
+    }
+    @Test
+    public void ctrlClickExample()
+    {
+        driver.get("https://fakestore.testelka.pl/select/");
+        List<WebElement> items = FindMany(By.cssSelector(".ui-selectee"));
+        Actions actions = new Actions(driver);
+        actions
+                .keyDown(Keys.CONTROL)
+                .click(items.get(1))
+                .click(items.get(2))
+                .click(items.get(3))
+                .doubleClick(items.get(4))
+                .keyUp(Keys.CONTROL)
+                .perform();
+        List<WebElement> selectedItems = FindMany(By.cssSelector(".ui-selected"));
+        Assertions.assertEquals(3, selectedItems.size(), "3 items are not selected");
+    }
+    @Test
+    public void dragAndDropExample()
+    {
+        driver.get("https://fakestore.testelka.pl/actions/");
+        Actions actions = new Actions(driver);
+        WebElement draggable = Find(By.cssSelector("#draggable"));
+        WebElement droppable = Find(By.cssSelector("#droppable"));
+        actions
+                .dragAndDrop(draggable,droppable)
+                .perform();
+        actions
+                .clickAndHold(draggable)
+                .moveToElement(droppable, 75, 75)
+                .release()
+                .perform();
+
+        Assertions.assertEquals("Dropped!", droppable.getText(), "Item wasn't moved correctly");
     }
 }
