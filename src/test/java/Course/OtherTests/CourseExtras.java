@@ -14,10 +14,8 @@ import org.openqa.selenium.print.PageSize;
 import org.openqa.selenium.print.PrintOptions;
 import org.openqa.selenium.remote.http.HttpResponse;
 import org.openqa.selenium.remote.http.Route;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.*;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -35,11 +33,13 @@ public class CourseExtras extends BaseTests {
     private final By removeFromWishlistLocator = By.cssSelector(".delete_item");
     private final By addToCartLocator = By.name("add-to-cart");
     private WebDriver driver;
+    private WebDriverWait wait;
 
     @BeforeEach
     public void AdditionalSetup()
     {
         driver = browser.driver;
+        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
     }
 
     @Test
@@ -204,5 +204,35 @@ public class CourseExtras extends BaseTests {
     {
         ((HasAuthentication)driver).register(UsernameAndPassword.of("harrypotter", "Alohomora"));
         driver.get("https://fakestore.testelka.pl/wp-content/uploads/protected/cos.html");
+    }
+    @Test
+    public void alertExample()
+    {
+        driver.get("https://fakestore.testelka.pl/alerty/");
+        Find(By.cssSelector("[onclick='confirmFunction()']")).click();
+        Alert alert = driver.switchTo().alert();
+        Assertions.assertEquals("Wciśnij coś:", alert.getText());
+        alert.accept();
+        Assertions.assertEquals("Wybrana opcja to OK!", Find(By.cssSelector("#demo")).getText());
+        Find(By.className("woocommerce-store-notice__dismiss-link")).click();
+        Find(By.cssSelector("[onclick='delayedAlertFunction()']")).click();
+        Alert delayedAlert = wait.until(ExpectedConditions.alertIsPresent());
+        Assertions.assertEquals("Miałem mały poślizg", delayedAlert.getText());
+    }
+    @Test
+    public void multipleWindowsExample()
+    {
+        driver.get("http://localhost:8080/product/" + astronomySlug);
+        String firstTab = driver.getWindowHandle();
+        String secondTab = driver.switchTo().newWindow(WindowType.TAB).getWindowHandle();
+        wait.until(ExpectedConditions.numberOfWindowsToBe(2));
+        driver.get("http://localhost:8080/");
+        driver.switchTo().window(firstTab);
+        driver.switchTo().newWindow(WindowType.TAB).getWindowHandle();
+        driver.close();
+        Assertions.assertAll(
+                () -> Assertions.assertNotEquals(firstTab, secondTab),
+                () -> Assertions.assertEquals(2, driver.getWindowHandles().size())
+        );
     }
 }
