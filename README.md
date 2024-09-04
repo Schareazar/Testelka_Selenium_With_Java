@@ -1,4 +1,4 @@
-# selenium-testelka
+# Testelka_Selenium_With_Java
 
 Project is a result of following Selenium in Java course from https://testelka.pl/magik-selenium/
 
